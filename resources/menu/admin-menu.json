@@ -1,0 +1,114 @@
+{
+  "menu": [
+    {
+      "menuHeader": "Dashboard"
+    },
+    {
+      "url": "/admin/dashboard",
+      "name": "Analytics",
+      "slug": "dashboard-analytics"
+    },
+    {
+      "url": "/admin/calendar",
+      "name": "Calendar",
+      "slug": "dashboard-calendar"
+    },
+    {
+      "menuHeader": "Event Requests"
+    },
+    {
+      "url": "/admin/event-requests",
+      "name": "All Requests",
+      "slug": "event-requests-all"
+    },
+    {
+      "url": "/admin/event-requests/pending",
+      "name": "Pending Approval",
+      "slug": "event-requests-pending"
+    },
+    {
+      "url": "/admin/event-requests/approved-events",
+      "name": "Approved Events",
+      "slug": "event-requests-approved"
+    },
+    {
+      "menuHeader": "Approval Workflow"
+    },
+    {
+      "url": "/admin/approvals/pending",
+      "name": "My Pending Approvals",
+      "slug": "approvals-pending"
+    },
+    {
+      "url": "/admin/approvals/history",
+      "name": "Approval History",
+      "slug": "approvals-history"
+    },
+    {
+      "menuHeader": "eSignatures"
+    },
+    {
+      "url": "/admin/esignatures/pending",
+      "name": "Pending eSignatures",
+      "slug": "esignatures-pending"
+    },
+    {
+      "url": "/admin/esignatures/completed",
+      "name": "Completed eSignatures",
+      "slug": "esignatures-completed"
+    },
+    {
+      "menuHeader": "Organizations"
+    },
+    {
+      "url": "/admin/organizations",
+      "name": "All Organizations",
+      "slug": "organizations-all"
+    },
+    {
+      "menuHeader": "Event Reports"
+    },
+    {
+      "url": "/admin/reports/minutes",
+      "name": "Minutes of Events",
+      "slug": "reports-minutes"
+    },
+    {
+      "menuHeader": "User Management"
+    },
+    {
+      "url": "/admin/users",
+      "name": "All Users",
+      "slug": "users-all"
+    },
+    {
+      "url": "/admin/roles",
+      "name": "Roles & Permissions",
+      "slug": "users-roles"
+    },
+    {
+      "menuHeader": "Account Settings"
+    },
+    {
+      "url": "/admin/account",
+      "name": "Profile",
+      "slug": "account-profile"
+    },
+    {
+      "menuHeader": "Support"
+    },
+    {
+      "url": "/admin/help",
+      "name": "Help Center",
+      "slug": "help-center"
+    },
+    {
+      "menuHeader": "Account"
+    },
+    {
+      "url": "/logout",
+      "name": "Logout",
+      "slug": "logout"
+    }
+  ]
+}

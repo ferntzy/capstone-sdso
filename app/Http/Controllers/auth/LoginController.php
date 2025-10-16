@@ -4,58 +4,65 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash; // if you use hashing
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class LoginController extends Controller
 {
-  // Show login page
   public function showLoginForm()
   {
     return view('auth.login');
   }
 
-  // Handle login attempt
   public function login(Request $request)
   {
-    $request->validate([
-      'email-username' => 'required|string',
-      'password' => 'required|string',
+    $credentials = $request->validate([
+      'email' => ['required'],
+      'password' => ['required'],
     ]);
 
-    $login = $request->input('email-username');
-    $password = $request->input('password');
+    if (Auth::attempt($credentials)) {
+      $request->session()->regenerate();
 
-    // Check if login is via email or username
-    $user = DB::table('user')
-      ->where('email', $login)
-      ->orWhere('username', $login)
-      ->first();
+      $user = Auth::user();
 
-    if ($user) {
-      // 🔹 If passwords are hashed (recommended):
-      // if (Hash::check($password, $user->password)) {
-
-      // 🔹 If passwords are stored as plain text (not recommended):
-      if ($password === $user->password) {
-        // Save user in session
-        Session::put('user_id', $user->user_id);
-        Session::put('username', $user->username);
-        Session::put('account_role', $user->account_role);
-        Session::put('logged_in', true);
-
-        return redirect()->intended('/dashboard'); // redirect after login
+      // Redirect based on account_role
+      switch ($user->account_role) {
+        case 'admin':
+          return redirect()->intended('/admin/dashboard');
+        case 'Student_Organization':
+          return redirect()->intended('/student/dashboard');
+        case 'Faculty_Adviser':
+          return redirect()->intended('/faculty/dashboard');
+        case 'SDSO_Head':
+          return redirect()->intended('/sdso/dashboard');
+        case 'VP_SAS':
+          return redirect()->intended('/vpsas/dashboard');
+        case 'SAS_Director':
+          return redirect()->intended('/sas/dashboard');
+        case 'BARGO':
+          return redirect()->intended('/bargo/dashboard');
+        default:
+          return redirect()->intended('/dashboard');
       }
     }
 
-    return back()->withErrors(['login' => 'Invalid credentials.']);
+    return back()->withErrors([
+      'email' => 'Invalid credentials.',
+    ]);
   }
 
-  // Logout
   public function logout(Request $request)
   {
-    Session::flush();
-    return redirect('/login')->with('success', 'Logged out successfully');
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/login');
   }
+}
+class User extends Authenticatable
+{
+  protected $primaryKey = 'user_id'; // Important for your custom column name
+  public $incrementing = true;
+  protected $fillable = ['username', 'email', 'password', 'account_role'];
 }

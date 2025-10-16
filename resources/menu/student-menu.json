@@ -1,0 +1,35 @@
+{
+  "menu": [
+    {
+      "menuHeader": "Dashboard"
+    },
+    {
+      "url": "/student/dashboard",
+      "name": "My Dashboard",
+      "slug": "student-dashboard"
+    },
+    {
+      "url": "/student/events",
+      "name": "My Event Requests",
+      "slug": "student-events"
+    },
+    {
+      "url": "/student/calendar",
+      "name": "Calendar",
+      "slug": "student-calendar"
+    },
+    {
+      "menuHeader": "Account"
+    },
+    {
+      "url": "/student/profile",
+      "name": "Profile",
+      "slug": "student-profile"
+    },
+    {
+      "url": "/logout",
+      "name": "Logout",
+      "slug": "logout"
+    }
+  ]
+}

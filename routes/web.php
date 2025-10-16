@@ -1,76 +1,102 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
 
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+*/
 
+// Login & Logout
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
-// authentication
-Route::get('/', function () {
-  return view('auth.login');
-});
+// Logout route
+Route::get('/logout', function () {
+  Auth::logout();
+  session()->invalidate();
+  session()->regenerateToken();
 
+  return redirect('/login')->with('logout_success', true);
+})->name('logout');
 
-//admin dashboard
-Route::get('/admin/dashboard', function () {
-  return view('admin.dashboard');
-});
-Route::get('/admin/calendar', function () {
-  return view('admin.calendardisplay');
-});
+/*
+|--------------------------------------------------------------------------
+| Role-Based Dashboards & Routes
+|--------------------------------------------------------------------------
+*/
 
-//admin event request
-Route::get('/admin/event-requests', function () {
-  return view('admin.EventRequest.AllRequest');
-});
-Route::get('/admin/event-requests/pending', function () {
-  return view('admin.EventRequest.PendingApproval');
-});
-Route::get('/admin/event-requests/approved-events', function () {
-  return view('admin.EventRequest.ApprovedEvents');
-});
+// Admin Routes
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
-//admin approvals
-Route::get('/admin/approvals/pending', function () {
-  return view('admin.approvals.pending');
-});
+  // Dashboard
+  Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
 
-Route::get('/admin/approvals/history', function () {
-  return view('admin.approvals.history');
-});
+  // Users Management
+  Route::get('/users', [UserController::class, 'index'])->name('users.index');
+  Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+  Route::post('/users', [UserController::class, 'store'])->name('users.store');
+  Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+  Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+  Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-//admin e-signature
-Route::get('/admin/esignatures/pending', function () {
-  return view('admin.ESignature.pending');
-});
-Route::get('/admin/esignatures/completed', function () {
-  return view('admin.ESignature.completed');
-});
-
-//admin organizations
-Route::get('/admin/organizations', function () {
-  return view('admin.organizations.organizations');
-});
-
-//admin reports
-Route::get('/admin/reports/minutes', function () {
-  return view('admin.reports.minutes');
-});
-
-//admin users
-Route::get('/admin/users', function () {
-  return view('admin.users.users');
-});
-
-Route::get('/admin/roles', function () {
-  return view('admin.users.roles');
+  // Other Admin Pages
+  Route::view('/calendar', 'admin.calendardisplay');
+  Route::view('/event-requests', 'admin.EventRequest.AllRequest');
+  Route::view('/event-requests/pending', 'admin.EventRequest.PendingApproval');
+  Route::view('/event-requests/approved-events', 'admin.EventRequest.ApprovedEvents');
+  Route::view('/approvals/pending', 'admin.approvals.pending');
+  Route::view('/approvals/history', 'admin.approvals.history');
+  Route::view('/esignatures/pending', 'admin.ESignature.pending');
+  Route::view('/esignatures/completed', 'admin.ESignature.completed');
+  Route::view('/organizations', 'admin.organizations.organizations');
+  Route::view('/reports/minutes', 'admin.reports.minutes');
+  Route::view('/roles', 'admin.users.roles');
+  Route::view('/account', 'admin.profile.account');
+  Route::view('/help', 'admin.help.help');
 });
 
-//admin account
-Route::get('/admin/account', function () {
-  return view('admin.profile.account');
+// Student Organization Routes
+Route::middleware(['auth', 'role:Student_Organization'])->group(function () {
+  Route::view('/student/dashboard', 'student.dashboard')->name('student.dashboard');
 });
 
-//admin help
-Route::get('/admin/help', function () {
-  return view('admin.help.help');
+// SDSO Head Routes
+Route::middleware(['auth', 'role:SDSO_Head'])->group(function () {
+  Route::view('/sdso/dashboard', 'sdso.dashboard')->name('sdso.dashboard');
 });
+
+// Faculty Adviser Routes
+Route::middleware(['auth', 'role:Faculty_Adviser'])->group(function () {
+  Route::view('/faculty/dashboard', 'faculty.dashboard')->name('faculty.dashboard');
+});
+
+// VP SAS Routes
+Route::middleware(['auth', 'role:VP_SAS'])->group(function () {
+  Route::view('/vpsas/dashboard', 'vpsas.dashboard')->name('vpsas.dashboard');
+});
+
+// SAS Director Routes
+Route::middleware(['auth', 'role:SAS_Director'])->group(function () {
+  Route::view('/sas/dashboard', 'sas.dashboard')->name('sas.dashboard');
+});
+
+// BARGO Routes
+Route::middleware(['auth', 'role:BARGO'])->group(function () {
+  Route::view('/bargo/dashboard', 'bargo.dashboard')->name('bargo.dashboard');
+});
+
+/*
+|--------------------------------------------------------------------------
+| PDF Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/pdf', [PdfController::class, 'generate']);
+Route::get('/pdf-form', [PdfController::class, 'showForm']);
+Route::post('/generate-pdf', [PdfController::class, 'generatePDF']);
+Route::get('/generate-slsu-pdf', [PdfController::class, 'generatePDF']);

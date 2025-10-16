@@ -1,0 +1,43 @@
+{
+  "menu": [
+    {
+      "menuHeader": "Dashboard"
+    },
+    {
+      "url": "/faculty/dashboard",
+      "name": "Overview",
+      "slug": "faculty-dashboard"
+    },
+    {
+      "url": "/faculty/approvals",
+      "name": "Event Approvals",
+      "slug": "faculty-approvals"
+    },
+    {
+      "url": "/faculty/calendar",
+      "name": "Calendar",
+      "slug": "faculty-calendar"
+    },
+    {
+      "menuHeader": "Reports"
+    },
+    {
+      "url": "/faculty/reports",
+      "name": "My Reports",
+      "slug": "faculty-reports"
+    },
+    {
+      "menuHeader": "Account"
+    },
+    {
+      "url": "/faculty/profile",
+      "name": "Profile",
+      "slug": "faculty-profile"
+    },
+    {
+      "url": "/logout",
+      "name": "Logout",
+      "slug": "logout"
+    }
+  ]
+}
