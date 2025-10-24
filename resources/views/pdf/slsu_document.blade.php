@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Official SLSU Document</title>
+  <title>Student Activity Permit</title>
   <style>
     body {
       font-family: DejaVu Sans, sans-serif;
@@ -13,14 +13,13 @@
 
     .header {
       text-align: center;
-      border-bottom: 3px solid #0047ab;
-      padding-bottom: 10px;
       margin-bottom: 20px;
     }
 
     .header img {
       width: 80px;
       height: 80px;
+      vertical-align: middle;
     }
 
     .university-name {
@@ -38,26 +37,44 @@
     h2.title {
       text-align: center;
       text-transform: uppercase;
-      margin-top: 30px;
+      margin: 20px 0;
       color: #0047ab;
       font-weight: bold;
     }
 
-    .content {
-      margin-top: 10px;
-      line-height: 1.6;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #000;
+    }
+
+    th,
+    td {
+      padding: 5px;
+      vertical-align: top;
+    }
+
+    .checkbox-group label {
+      display: block;
+      font-weight: normal;
     }
 
     .signature-section {
-      margin-top: 80px;
-      display: flex;
-      justify-content: space-between;
       width: 100%;
+      margin-top: 40px;
     }
 
     .signature-box {
-      width: 45%;
+      width: 32%;
+      display: inline-block;
       text-align: center;
+      vertical-align: top;
     }
 
     .signature-line {
@@ -73,29 +90,15 @@
       margin-top: 5px;
     }
 
-    .footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      text-align: center;
+    .footer-note {
       font-size: 9pt;
-      color: #777;
-      border-top: 1px solid #ccc;
-      padding-top: 5px;
+      margin-top: 20px;
     }
 
-    .signature {
-      margin-top: 80px;
+    .date-section {
+      margin-top: 30px;
       text-align: right;
-    }
-
-    .signature img {
-      height: auto;
-      width: 200px;
-      /* ✅ makes it more visible */
-      display: block;
-      margin: 0 auto 10px auto;
+      font-size: 10pt;
     }
   </style>
 </head>
@@ -105,39 +108,137 @@
   <div class="header">
     <img src="{{ public_path('images/slsu_logo.png') }}" alt="SLSU Logo">
     <div class="university-name">Southern Leyte State University</div>
-    <div class="subtext">Sogod, Southern Leyte, Philippines</div>
-    <div class="subtext">Tel. No. (053) 577-8299 | www.southernleytestateu.edu.ph</div>
+    <div class="subtext">Main Campus, San Roque, Sogod, Southern Leyte</div>
+    <div class="subtext">Email: president@southernleytestateu.edu.ph | Website: www.southernleytestateu.edu.ph</div>
   </div>
 
-  <h2 class="title">Official Document</h2>
+  <h2 class="title">Student Activity Permit</h2>
 
-  <div class="content">
-    <p><strong>Name:</strong> {{ $name }}</p>
-    <p><strong>Email:</strong> {{ $email }}</p>
-    <p><strong>Address:</strong> {{ $address }}</p>
-    <p><strong>Notes / Purpose:</strong> {{ $notes }}</p>
+  <table>
+    <tr>
+      <td><strong>Name of Registered Student / Organization / Subject / Class</strong></td>
+      {{-- <td>{{ $student_name }}</td> --}}
+      <td>Rovic Kristian</td>
+    </tr>
+    <tr>
+      <td><strong>Date of Filing</strong></td>
+      {{-- <td>{{ $date_of_filing }}</td> --}}
+      <td>June 10, 2024</td>
+    </tr>
+    <tr>
+      <td><strong>Title of Activity</strong></td>
+      {{-- <td>{{ $title }}</td> --}}
+      <td>Leadership Training</td>
+    </tr>
+    <tr>
+      <td><strong>Purpose</strong></td>
+      {{-- <td>{{ $purpose }}</td> --}}
+      <td>To enhance leadership skills among student leaders.</td>
+    </tr>
+    <tr>
+      <td><strong>Type</strong></td>
+      <td class="checkbox-group">
+        {{-- <label><input type="checkbox" {{ $type_in_campus }}> In-campus</label>
+        <label><input type="checkbox" {{ $type_off_campus }}> Off-campus</label> --}}
+        <label>Meeting </label>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Nature</strong></td>
+      <td class="checkbox-group">
+        {{-- <label><input type="checkbox" {{ $nature_training }}> Training / Seminar</label>
+        <label><input type="checkbox" {{ $nature_conference }}> Conference / Summit</label>
+        <label><input type="checkbox" {{ $nature_culmination }}> Culmination</label>
+        <label><input type="checkbox" {{ $nature_socialization }}> Socialization</label>
+        <label><input type="checkbox" {{ $nature_meeting }}> Meeting</label>
+        <label><input type="checkbox" {{ $nature_concert }}> Concert</label>
+        <label><input type="checkbox" {{ $nature_exhibit }}> Exhibit</label>
+        <label><input type="checkbox" {{ $nature_program }}> Program</label>
+        <label><input type="checkbox" {{ $nature_educational }}> Educational Tour</label>
+        <label><input type="checkbox" {{ $nature_clean }}> Clean and Green</label>
+        <label><input type="checkbox" {{ $nature_competition }}> Competition</label>
+        <label><input type="checkbox" {{ $nature_other }}> Other: {{ $nature_other_text }}</label> --}}
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Venue</strong></td>
+      {{-- <td>{{ $venue }}</td> --}}
+      <td>University Auditorium</td>
+    </tr>
+    <tr>
+      <td><strong>Date</strong></td>
+      {{-- <td>{{ $activity_date }}</td> --}}
+      <td>June 20, 2024</td>
+    </tr>
+    <tr>
+      <td><strong>Time</strong></td>
+      {{-- <td>{{ $activity_time }}</td> --}}
+      <td>8:00 AM - 5:00 PM</td>
+    </tr>
+    <tr>
+      <td><strong>Participants</strong></td>
+      <td class="checkbox-group">
+        {{-- <label><input type="checkbox" {{ $participants_members }}> Members</label>
+        <label><input type="checkbox" {{ $participants_officers }}> Officers</label>
+        <label><input type="checkbox" {{ $participants_all }}> All Students</label>
+        <label><input type="checkbox" {{ $participants_other }}> Other: {{ $participants_other_text }}</label>
+        <p><strong>Number:</strong> {{ $participants_number }}</p> --}}
+      </td>
+    </tr>
+  </table>
+
+  <div class="signature-section">
+    <div class="signature-box">
+      <div class="signature-line"></div>
+      <div class="signature-label">Student Organization President / Class President</div>
+    </div>
+
+    <div class="signature-box">
+      <div class="signature-line"></div>
+      <div class="signature-label">Student Organization Adviser / Class Instructor</div>
+    </div>
+
+    <div class="signature-box">
+      <div class="signature-line"></div>
+      <div class="signature-label">Business Affairs and Resource Generation Office Personnel</div>
+    </div>
   </div>
 
   <div class="signature-section">
     <div class="signature-box">
       <div class="signature-line"></div>
-      <div class="signature-label">Authorized Official</div>
+      <div class="signature-label">Office of Student Development Services Head (For Main Campus Only)</div>
     </div>
 
-    <div class="signature">
-      <p>Signed electronically by:</p>
-      @if(file_exists($signature))
-        <img src="{{ $signature }}" alt="E-Signature">
-      @endif
-
-      <p><strong>{{ $signer }}</strong><br>Registrar, Southern Leyte State University</p>
+    <div class="signature-box">
+      <div class="signature-line"></div>
+      <div class="signature-label">Office of Student Affairs and Services Director / Head / College Dean / Institute
+        Director</div>
     </div>
 
-
+    <div class="signature-box">
+      <div class="signature-line"></div>
+      <div class="signature-label">Vice President for Students and Auxiliary Services / Vice President for Academic
+        Affairs / Campus Director</div>
+    </div>
   </div>
 
-  <div class="footer">
-    Generated by the SLSU Digital Document System — {{ date('F d, Y') }}
+  <p class="footer-note">
+    In accordance with the provisions of the Data Privacy Act of 2012, I hereby grant the Office of Student Development
+    Services / Office of Student Affairs and Services the lawful use of my personal information. I further certify that
+    the information contained is true and correct.
+  </p>
+
+  <p class="footer-note">
+    NOTE: This form must be submitted together with the pertinent attachments to the Office of Student Development
+    Services (OSDS)
+    or Office of Student Affairs and Services (OSAS) three (3) days before the activity. Upon approval, there must be no
+    change made in the permit without consent from the OSDS Head or OSAS Head. A change in the schedule and venue due to
+    the unprecedented circumstances will be considered then a notification letter must be submitted to the OSDS or OSAS.
+  </p>
+
+  <div class="date-section">
+    <p>Doc. Code: SLSU-QF-SPS08 | Revision: 04 | Date: 04 August 2023</p>
   </div>
 
 </body>

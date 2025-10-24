@@ -98,5 +98,6 @@ Route::middleware(['auth', 'role:BARGO'])->group(function () {
 */
 Route::get('/pdf', [PdfController::class, 'generate']);
 Route::get('/pdf-form', [PdfController::class, 'showForm']);
-Route::post('/generate-pdf', [PdfController::class, 'generatePDF']);
+Route::get('/generate-pdf', [PdfController::class, 'generatePDF'])->name('pdf.generate');
+
 Route::get('/generate-slsu-pdf', [PdfController::class, 'generatePDF']);
