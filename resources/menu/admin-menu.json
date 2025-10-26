@@ -22,16 +22,6 @@
       "slug": "event-requests-all"
     },
     {
-      "url": "/admin/event-requests/pending",
-      "name": "Pending Approval",
-      "slug": "event-requests-pending"
-    },
-    {
-      "url": "/admin/event-requests/approved-events",
-      "name": "Approved Events",
-      "slug": "event-requests-approved"
-    },
-    {
       "menuHeader": "Approval Workflow"
     },
     {
@@ -64,14 +54,6 @@
       "url": "/admin/organizations",
       "name": "All Organizations",
       "slug": "organizations-all"
-    },
-    {
-      "menuHeader": "Event Reports"
-    },
-    {
-      "url": "/admin/reports/minutes",
-      "name": "Minutes of Events",
-      "slug": "reports-minutes"
     },
     {
       "menuHeader": "User Management"

@@ -19,7 +19,7 @@
   <div class="{{ $container }} py-4">
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">📅 Event Calendar</h5>
+        <h5 class="mb-0">Event Calendar</h5>
       </div>
       <div class="card-body">
         <div id="calendar"></div>
@@ -107,9 +107,9 @@
           Swal.fire({
             title: info.event.title,
             html: `
-              <b>Venue:</b> ${info.event.extendedProps.venue || 'N/A'}<br>
-              <b>Time:</b> ${formatTime(info.event.start)} - ${formatTime(info.event.end)}
-            `,
+                  <b>Venue:</b> ${info.event.extendedProps.venue || 'N/A'}<br>
+                  <b>Time:</b> ${formatTime(info.event.start)} - ${formatTime(info.event.end)}
+                `,
             showCancelButton: true,
             confirmButtonText: 'Delete',
             confirmButtonColor: '#d33',

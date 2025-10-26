@@ -1,20 +1,17 @@
 @extends('layouts/commonMaster')
 
 @php
-  /* Display elements */
   $contentNavbar = true;
-  $containerNav = ($containerNav ?? 'container-xxl');
-  $isNavbar = ($isNavbar ?? true);
-  $isMenu = ($isMenu ?? true);
-  $isFlex = ($isFlex ?? false);
-  $isFooter = ($isFooter ?? true);
-
-  /* HTML Classes */
+  $containerNav = $containerNav ?? 'container-xxl';
+  $isNavbar = $isNavbar ?? true;
+  $isMenu = $isMenu ?? true;
+  $isFlex = $isFlex ?? false;
+  $isFooter = $isFooter ?? true;
   $navbarDetached = 'navbar-detached';
-
-  /* Content classes */
-  $container = ($container ?? 'container-xxl');
+  $container = $container ?? 'container-xxl';
 @endphp
+
+@section('title', 'Admin Dashboard')
 
 @section('layoutContent')
   <div class="layout-wrapper layout-content-navbar {{ $isMenu ? '' : 'layout-without-menu' }}">
@@ -26,108 +23,149 @@
 
       <!-- Layout page -->
       <div class="layout-page">
-        <!-- BEGIN: Navbar-->
         @if ($isNavbar)
           @include('layouts/sections/navbar/navbar')
         @endif
-        <!-- END: Navbar-->
 
         <!-- Content wrapper -->
         <div class="content-wrapper">
+          <div class="{{ $container }} flex-grow-1 container-p-y">
 
-          <!-- Content -->
-          @if ($isFlex)
-            <div class="{{ $container }} d-flex align-items-stretch flex-grow-1 p-0">
-          @else
-              <div class="{{ $container }} flex-grow-1 container-p-y">
-            @endif
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div>
+                <h3 class="fw-bold mb-0">SLSU Event Management Dashboard</h3>
+                <p class="text-muted mb-0">Monitor events, users, and organizations at a glance.</p>
+              </div>
+            </div>
 
-              <div class="row mb-4">
-                <div class="col-12 text-center mb-4">
-                  <h3 class="">Analytics Dashboard (Placeholder)</h3>
-                  <p class="text-muted">This is where your analytics summary will appear.</p>
-                </div>
-
-                <!-- Metric Cards -->
-
-                <div class="col-md-3 col-sm-6 mb-4">
-                  <div class="card shadow-sm h-100">
-                    <a href="/admin/pending-events" class="d-inline-block text-decoration-none">
-                      <div class="card-body">
-                        <i class="ti ti-calendar-event text-primary" style="font-size: 2.5rem; margin-bottom: 8px;"></i>
-                        <h4 id="pendingEvents" class="card-title">0</h4>
-                        <p class="card-text text-muted">Pending Events</p>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-
-
-                <div class="col-md-3 col-sm-6 mb-4">
-                  <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                      <i class="ti ti-bolt text-info" style="font-size: 2.5rem; margin-bottom: 8px;"></i>
-                      <h4 id="ongoingEvents" class="card-title">0</h4>
-                      <p class="card-text text-muted">Ongoing Events</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6 mb-4">
-                  <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                      <i class="ti ti-users text-success" style="font-size: 2.5rem; margin-bottom: 8px;"></i>
-                      <h4 id="activeUsers" class="card-title">0</h4>
-                      <p class="card-text text-muted">Active Users</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6 mb-4">
-                  <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                      <i class="ti ti-building text-primary" style="font-size: 2.5rem; margin-bottom: 8px;"></i>
-                      <h4 id="activeOrganizations" class="card-title">0</h4>
-                      <p class="card-text text-muted">Active Organizations</p>
-                    </div>
+            <!-- Metrics Row -->
+            <div class="row g-4">
+              <div class="col-md-3 col-sm-6">
+                <div class="card border-0 shadow-sm h-100 hover-shadow">
+                  <div class="card-body text-center">
+                    <i class="ti ti-clock text-warning mb-2" style="font-size:2.5rem;"></i>
+                    <h4 id="pendingEvents" class="fw-bold mb-1">—</h4>
+                    <p class="text-muted mb-0">Pending Event Requests</p>
                   </div>
                 </div>
               </div>
 
+              <div class="col-md-3 col-sm-6">
+                <div class="card border-0 shadow-sm h-100 hover-shadow">
+                  <div class="card-body text-center">
+                    <i class="ti ti-bolt text-info mb-2" style="font-size:2.5rem;"></i>
+                    <h4 id="ongoingEvents" class="fw-bold mb-1">—</h4>
+                    <p class="text-muted mb-0">Ongoing / Approved Events</p>
+                  </div>
+                </div>
+              </div>
 
+              <div class="col-md-3 col-sm-6">
+                <div class="card border-0 shadow-sm h-100 hover-shadow">
+                  <div class="card-body text-center">
+                    <i class="ti ti-check text-success mb-2" style="font-size:2.5rem;"></i>
+                    <h4 id="completedEvents" class="fw-bold mb-1">—</h4>
+                    <p class="text-muted mb-0">Completed Events</p>
+                  </div>
+                </div>
+              </div>
 
-              <!-- Calendar -->
-              <div class="card shadow-sm mb-4">
+              <div class="col-md-3 col-sm-6">
+                <div class="card border-0 shadow-sm h-100 hover-shadow">
+                  <div class="card-body text-center">
+                    <i class="ti ti-building text-primary mb-2" style="font-size:2.5rem;"></i>
+                    <h4 id="organizationsCount" class="fw-bold mb-1">—</h4>
+                    <p class="text-muted mb-0">Registered Organizations</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <!-- Second Row -->
+            <div class="row g-4 mt-1">
+              <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 hover-shadow">
+                  <div class="card-body text-center">
+                    <i class="ti ti-users text-secondary mb-2" style="font-size:2.5rem;"></i>
+                    <h4 id="activeUsers" class="fw-bold mb-1">—</h4>
+                    <p class="text-muted mb-0">Active Users</p>
+                  </div>
+                </div>
+              </div>
 
+              <div class="col-md-8">
+                <div class="card border-0 shadow-sm h-100 hover-shadow">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
 
+                      <ul class="list-group list-group-flush" id="upcomingEventsList">
+                        <li class="list-group-item text-muted">Loading upcoming events...</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>
-            <!-- / Content -->
-            <script src="{{ asset('assets/js/analytics-metrics.js') }}"></script>
 
             <div class="content-backdrop fade"></div>
           </div>
-          <!--/ Content wrapper -->
         </div>
-        <!-- / Layout page -->
       </div>
 
       @if ($isMenu)
-        <!-- Overlay -->
         <div class="layout-overlay layout-menu-toggle"></div>
       @endif
 
-      <!-- Drag Target Area To SlideIn Menu On Small Screens -->
       <div class="drag-target"></div>
     </div>
-    <!-- / Layout wrapper -->
 @endsection
 
-  {{-- ✅ Include the analytics placeholder script --}}
   @section('page-script')
-    {{-- ✅ Include both placeholder scripts here --}}
-    <script src="{{ asset('assets/js/analytics-metrics.js') }}"></script>
-    <script src="{{ asset('assets/js/analytics.js') }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Temporary mock data (replace with backend data later)
+        const dashboardData = {
+          pending: 12,
+          ongoing: 5,
+          completed: 8,
+          organizations: 14,
+          activeUsers: 120,
+          upcomingEvents: [
+            { title: 'Intramurals 2025', date: 'Nov 2, 2025', venue: 'SLSU Field' },
+            { title: 'Leadership Seminar', date: 'Nov 5, 2025', venue: 'Auditorium' },
+            { title: 'Cultural Fest', date: 'Nov 10, 2025', venue: 'Gymnasium' }
+          ]
+        };
+
+        // Update dashboard metrics
+        document.getElementById('pendingEvents').textContent = dashboardData.pending;
+        document.getElementById('ongoingEvents').textContent = dashboardData.ongoing;
+        document.getElementById('completedEvents').textContent = dashboardData.completed;
+        document.getElementById('organizationsCount').textContent = dashboardData.organizations;
+        document.getElementById('activeUsers').textContent = dashboardData.activeUsers;
+
+        // Render upcoming events
+        const eventList = document.getElementById('upcomingEventsList');
+        eventList.innerHTML = '';
+
+        if (dashboardData.upcomingEvents.length > 0) {
+          dashboardData.upcomingEvents.forEach(event => {
+            const li = document.createElement('li');
+            li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+            li.innerHTML = `
+                      <div>
+                        <strong>${event.title}</strong><br>
+                        <small class="text-muted">${event.date} • ${event.venue}</small>
+                      </div>
+                      <i class="ti ti-calendar text-primary"></i>
+                    `;
+            eventList.appendChild(li);
+          });
+        } else {
+          eventList.innerHTML = '<li class="list-group-item text-muted">No upcoming events available.</li>';
+        }
+      });
+    </script>
   @endsection

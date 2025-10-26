@@ -5,6 +5,12 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\CalendarController;
+
+Route::prefix('admin')->group(function () {
+  Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+  Route::post('/calendar/events', [CalendarController::class, 'store'])->name('calendar.store');
+});
 
 /*
 |--------------------------------------------------------------------------
