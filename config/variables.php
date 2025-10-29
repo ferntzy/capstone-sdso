@@ -4,7 +4,7 @@ return [
   "creatorName" => "ThemeSelection",
   "creatorUrl" => "https://themeselection.com",
   "templateName" => "SDSO",
-  "templateSuffix" => "Bootstrap 5 HTML Laravel Free Admin Template",
+  "templateSuffix" => "SDSO - Student Document Service Online",
   "templateVersion" => "1.0.0",
   "templateFree" => true,
   "templateDescription" => "Most Powerful & Comprehensive Bootstrap 5 HTML Admin Dashboard Template built for developers!",

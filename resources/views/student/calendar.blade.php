@@ -107,9 +107,9 @@
           Swal.fire({
             title: info.event.title,
             html: `
-                          <b>Venue:</b> ${info.event.extendedProps.venue || 'N/A'}<br>
-                          <b>Time:</b> ${formatTime(info.event.start)} - ${formatTime(info.event.end)}
-                        `,
+                    <b>Venue:</b> ${info.event.extendedProps.venue || 'N/A'}<br>
+                    <b>Time:</b> ${formatTime(info.event.start)} - ${formatTime(info.event.end)}
+                  `,
             showCancelButton: true,
             confirmButtonText: 'Delete',
             confirmButtonColor: '#d33',

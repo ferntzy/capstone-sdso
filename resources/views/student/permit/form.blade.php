@@ -51,13 +51,10 @@
               <select name="organization_id" class="form-select" required>
                 <option value="" disabled selected>Select your organization</option>
                 @foreach ($organizations as $org)
-                  <option value="{{ $org->organization_id }}">
-                    {{ $org->organization_name }}
-                  </option>
+                  <option value="{{ $org->organization_id }}">{{ $org->organization_name }}</option>
                 @endforeach
               </select>
             </div>
-
           </div>
 
           <div class="mb-3">

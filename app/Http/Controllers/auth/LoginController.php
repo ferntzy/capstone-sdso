@@ -33,7 +33,7 @@ class LoginController extends Controller
         case 'Student_Organization':
           return redirect()->intended('/student/dashboard');
         case 'Faculty_Adviser':
-          return redirect()->intended('/faculty/dashboard');
+          return redirect()->intended('/adviser/dashboard');
         case 'SDSO_Head':
           return redirect()->intended('/sdso/dashboard');
         case 'VP_SAS':

@@ -4,35 +4,35 @@
       "menuHeader": "Dashboard"
     },
     {
-      "url": "/faculty/dashboard",
+      "url": "/adviser/dashboard",
       "name": "Overview",
-      "slug": "faculty-dashboard"
+      "slug": "adviser-dashboard"
     },
     {
-      "url": "/faculty/approvals",
+      "url": "/adviser/approvals",
       "name": "Event Approvals",
-      "slug": "faculty-approvals"
+      "slug": "adviser-approvals"
     },
     {
-      "url": "/faculty/calendar",
+      "url": "/adviser/calendar",
       "name": "Calendar",
-      "slug": "faculty-calendar"
+      "slug": "adviser-calendar"
     },
     {
       "menuHeader": "Reports"
     },
     {
-      "url": "/faculty/reports",
+      "url": "/adviser/reports",
       "name": "My Reports",
-      "slug": "faculty-reports"
+      "slug": "adviser-reports"
     },
     {
       "menuHeader": "Account"
     },
     {
-      "url": "/faculty/profile",
+      "url": "/adviser/profile",
       "name": "Profile",
-      "slug": "faculty-profile"
+      "slug": "adviser-profile"
     },
     {
       "url": "/logout",

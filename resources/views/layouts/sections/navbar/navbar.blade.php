@@ -33,13 +33,21 @@
 
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
       <!-- Search -->
-      <div class="navbar-nav align-items-center">
-        <div class="nav-item d-flex align-items-center">
-          <i class="mdi mdi-magnify mdi-24px lh-0"></i>
-          <input type="text" class="form-control border-0 shadow-none bg-body" placeholder="Search..."
-            aria-label="Search...">
+      @php
+        $searchVisibleRoutes = ['admin.logs'];
+      @endphp
+
+      @if(in_array(Route::currentRouteName(), $searchVisibleRoutes))
+        <div class="navbar-nav align-items-center">
+          <div class="nav-item d-flex align-items-center">
+            <i class="mdi mdi-magnify mdi-24px lh-0"></i>
+            <input type="text" id="globalSearch" class="form-control border-0 shadow-none bg-body" placeholder="Search..."
+              aria-label="Search...">
+          </div>
         </div>
-      </div>
+      @endif
+
+
 
 
       <!-- /Search -->

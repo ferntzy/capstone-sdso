@@ -39,7 +39,10 @@ class User extends Authenticatable
     'password',
     'remember_token',
   ];
-
+  public function organization()
+  {
+    return $this->hasOne(Organization::class, 'user_id');
+  }
   /**
    * The attributes that should be cast.
    *
