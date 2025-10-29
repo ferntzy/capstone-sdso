@@ -57,7 +57,8 @@ class LoginController extends Controller
     Auth::logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
-    return redirect('/login');
+    $request->session()->flush();
+    return redirect('/login')->with('logout_success', 'You have been logged out successfully!');
   }
 }
 class User extends Authenticatable

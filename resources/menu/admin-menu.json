@@ -22,19 +22,6 @@
       "slug": "event-requests-all"
     },
     {
-      "menuHeader": "Approval Workflow"
-    },
-    {
-      "url": "/admin/approvals/pending",
-      "name": "My Pending Approvals",
-      "slug": "approvals-pending"
-    },
-    {
-      "url": "/admin/approvals/history",
-      "name": "Approval History",
-      "slug": "approvals-history"
-    },
-    {
       "menuHeader": "eSignatures"
     },
     {
@@ -64,9 +51,9 @@
       "slug": "users-all"
     },
     {
-      "url": "/admin/roles",
-      "name": "Roles & Permissions",
-      "slug": "users-roles"
+      "url": "/admin/logs",
+      "name": "User Logs",
+      "slug": "user-logs"
     },
     {
       "menuHeader": "Account Settings"
@@ -75,14 +62,6 @@
       "url": "/admin/account",
       "name": "Profile",
       "slug": "account-profile"
-    },
-    {
-      "menuHeader": "Support"
-    },
-    {
-      "url": "/admin/help",
-      "name": "Help Center",
-      "slug": "help-center"
     },
     {
       "menuHeader": "Account"

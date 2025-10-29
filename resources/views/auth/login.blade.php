@@ -9,9 +9,29 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/css/core.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/css/theme-default.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
+
+  <!-- SweetAlert2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: url('{{ asset('images/slsu_logo.png') }}') no-repeat center center fixed;
+      background-size: 1000px;
+      background-color: #f8f9fa;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+    }
+  </style>
 </head>
 
-<body class="bg-light d-flex justify-content-center align-items-center" style="height: 100vh;">
+<body>
 
   <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
     <h4 class="text-center mb-4">Login</h4>
@@ -39,35 +59,27 @@
     </form>
   </div>
 
-  {{-- ✅ Logout Success Modal --}}
-  @if(session('logout_success'))
-  <div class="modal fade" id="logoutSuccessModal" tabindex="-1" aria-labelledby="logoutSuccessLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content text-center p-3">
-        <div class="modal-body">
-          <h4 class="text-success mb-3">✅ Logged Out Successfully</h4>
-          <p>You have been signed out of your account.</p>
-          <button type="button" class="btn btn-primary w-50 mt-2" data-bs-dismiss="modal">OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var logoutModal = new bootstrap.Modal(document.getElementById('logoutSuccessModal'));
-      logoutModal.show();
-
-      // Auto-close after 3 seconds (optional)
-      setTimeout(() => {
-        logoutModal.hide();
-      }, 3000);
-    });
-  </script>
-  @endif
-
+  <!-- jQuery + Bootstrap -->
   <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
   <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
+
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  @if (session('logout_success'))
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        Swal.fire({
+          icon: 'success',
+          title: 'Logged Out',
+          text: '{{ session('logout_success') }}',
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true
+        });
+      });
+    </script>
+  @endif
 
 </body>
 

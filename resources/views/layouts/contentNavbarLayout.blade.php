@@ -38,18 +38,15 @@
         <!-- Content wrapper -->
         <div class="content-wrapper">
 
-          <!-- Content -->
           @if ($isFlex)
-            <div class="{{$container}} d-flex align-items-stretch flex-grow-1 p-0">
+            <div id="main-content" class="{{$container}} d-flex align-items-stretch flex-grow-1 p-0">
           @else
-              <div class="{{$container}} flex-grow-1 container-p-y">
+              <div id="main-content" class="{{$container}} flex-grow-1 container-p-y">
             @endif
 
               @yield('content')
 
             </div>
-            <!-- / Content -->
-
             <!-- Footer -->
             @if ($isFooter)
               @include('layouts/sections/footer/footer')

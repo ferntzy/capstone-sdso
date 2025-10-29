@@ -17,6 +17,12 @@ Route::prefix('admin')->group(function () {
 | Authentication Routes
 |--------------------------------------------------------------------------
 */
+//I dont know why but adding extra lines here makes it work
+// Route::middleware(['auth', 'admin'])->group(function () {
+//   Route::get('/admin/logs', [App\Http\Controllers\UserLogController::class, 'index'])->name('admin.logs');
+// });
+
+
 
 // Login & Logout
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -39,7 +45,7 @@ Route::get('/logout', function () {
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-
+  Route::get('logs', [App\Http\Controllers\UserLogController::class, 'index'])->name('admin.logs');
   // Dashboard
   Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
 
@@ -97,13 +103,24 @@ Route::middleware(['auth', 'role:BARGO'])->group(function () {
   Route::view('/bargo/dashboard', 'bargo.dashboard')->name('bargo.dashboard');
 });
 
+
+
 /*
 |--------------------------------------------------------------------------
-| PDF Routes
+| User Side Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/pdf', [PdfController::class, 'generate']);
-Route::get('/pdf-form', [PdfController::class, 'showForm']);
-Route::get('/generate-pdf', [PdfController::class, 'generatePDF'])->name('pdf.generate');
 
-Route::get('/generate-slsu-pdf', [PdfController::class, 'generatePDF']);
+
+
+/*PDF Permit Routes*/
+
+use App\Http\Controllers\PermitController;
+
+Route::get('/permit/form', [PermitController::class, 'showForm'])->name('permit.form');
+Route::post('/permit/generate', [PermitController::class, 'generate'])->name('permit.generate');
+Route::get('/permit/generate', function () {
+  return redirect()->route('permit.form');
+});
+
+Route::view('/student/events', 'student.event.index');
