@@ -72,6 +72,8 @@ mix.webpackConfig({
   }
 });
 
+
+
 /*
  |--------------------------------------------------------------------------
  | Vendor assets
@@ -126,6 +128,7 @@ mixAssetsDir('js/**/*.js', (src, dest) => mix.scripts(src, dest));
 mixAssetsDir('css/**/*.css', (src, dest) => mix.copy(src, dest));
 
 mix.copy('node_modules/@mdi/font/fonts/*', 'public/assets/vendor/fonts/materialdesignicons');
+
 mix.version();
 
 /*
