@@ -194,6 +194,7 @@ class PermitController extends Controller
     $pdf->Write(0, $request->number);
 
     //prepared by (centered)
+    $pdf->SetFont('Helvetica', '', 10);
     $text = strtoupper($request->name);
     $textWidth = $pdf->GetStringWidth($text);
     $centeredX = 47 - ($textWidth / 2);
@@ -215,9 +216,6 @@ class PermitController extends Controller
       $centeredX = 47 - ($imageWidth / 2); // Center at 128
       $pdf->Image($signaturePath, $centeredX, 120, 40, 20);
     }
-
-
-
 
 
     // ✅ Signature (centered at same X as bottom name, 128)

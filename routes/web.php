@@ -7,7 +7,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\PermitController;
 use App\Http\Controllers\StudentEventController;
-use App\Http\Controllers\CalendarControlller;
 // ============================
 // AUTH ROUTES
 // ============================
