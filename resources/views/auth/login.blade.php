@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,57 +8,80 @@
   <title>Login</title>
 
   <link rel="stylesheet" href="{{ asset('assets/vendor/css/core.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/vendor/css/theme-default.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
+  {{-- <link rel="stylesheet" href="{{ asset('assets/vendor/css/theme-default.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"> --}}
+  <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+
 
   <!-- SweetAlert2 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
-  <style>
-    body {
-      background: url('{{ asset('images/slsu_logo.png') }}') no-repeat center center fixed;
-      background-size: 1000px;
-      background-color: #f8f9fa;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
 
-    .card {
-      background-color: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(5px);
-    }
-  </style>
 </head>
 
 <body>
 
-  <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
-    <h4 class="text-center mb-4">Login</h4>
+<div class="login-container">
+  <div class="login-card">
 
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        {{ $errors->first() }}
+    <!-- LEFT SIDE: LOGIN FORM -->
+    <div class="login-left">
+      <h3 class="login-title">STUDENT DEVEOPMENT SERVICE OFFICE (SDSO)</h3>
+
+      <div class="card shadow p-4 login-box">
+        {{-- <h4 class="text-center mb-4">WELCOME</h4> --}}
+
+        @if ($errors->any())
+          <div class="alert alert-danger">
+            {{ $errors->first() }}
+          </div>
+        @endif
+
+        <form method="POST" action="{{ route('login.post') }}">
+          @csrf
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" name="email" class="form-control" value="{{ old('email') }}" required autofocus>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" required>
+          </div>
+          <div class="checkbox-form-check mt-2">
+            <input type="checkbox" class="checkbox-form-check-input" id="showPasswordCheck">
+            <label class="checkbox-form-check-label" for="showPasswordCheck">Show Password</label>
+          </div>
+
+
+          <button type="submit" class="btn btn-primary w-100 login-btn">Login</button>
+        </form>
       </div>
-    @endif
+    </div>
 
-    <form method="POST" action="{{ route('login.post') }}">
-      @csrf
+    <!-- RIGHT SIDE: ILLUSTRATION -->
+    <div class="login-right">
+      <img src="{{ asset('images/click.png') }}" alt="SIS Illustration" class="login-image">
+    </div>
 
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="text" name="email" class="form-control" value="{{ old('email') }}" required autofocus>
-      </div>
-
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" name="password" class="form-control" required>
-      </div>
-
-      <button type="submit" class="btn btn-primary w-100">Login</button>
-    </form>
   </div>
+</div>
+
+  {{-- show password --}}
+  <script>
+    const passwordInput = document.querySelector('input[name="password"]');
+    const showPasswordCheck = document.getElementById('showPasswordCheck');
+
+    showPasswordCheck.addEventListener('change', function() {
+      if(this.checked) {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    });
+  </script>
+
 
   <!-- jQuery + Bootstrap -->
   <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
