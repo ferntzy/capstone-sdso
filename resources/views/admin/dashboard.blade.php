@@ -86,11 +86,11 @@
             <div class="row g-4 mt-1">
               <div class="col-md-4">
                 <div class="card border-0 shadow-sm h-100 hover-shadow">
-                  {{-- <div class="card-body text-center">
+                  <div class="card-body text-center">
                     <i class="ti ti-users text-secondary mb-2" style="font-size:2.5rem;"></i>
                     <h4 id="activeUsers" class="fw-bold mb-1">—</h4>
                     <p class="text-muted mb-0">Active Users</p>
-                  </div> --}}
+                  </div>
                 </div>
               </div>
 

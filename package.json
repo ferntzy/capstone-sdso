@@ -20,12 +20,13 @@
     "@babel/preset-env": "7.22.5",
     "@prettier/plugin-php": "0.19.6",
     "ajv": "8.12.0",
-    "axios": "1.4.0",
+    "axios": "^1.13.2",
     "babel-loader": "9.1.2",
-    "browser-sync": "2.29.3",
-    "browser-sync-webpack-plugin": "2.3.0",
+    "browser-sync": "^3.0.4",
+    "browser-sync-webpack-plugin": "^2.4.0",
     "cross-env": "7.0.3",
-    "laravel-mix": "6.0.49",
+    "laravel-mix": "^6.0.49",
+    "laravel-vite-plugin": "^2.0.1",
     "lodash": "4.17.21",
     "postcss": "8.4.26",
     "prettier": "2.8.8",
@@ -93,6 +94,7 @@
     "jquery": "3.7.0",
     "masonry-layout": "4.2.2",
     "node-waves": "0.7.6",
-    "perfect-scrollbar": "1.5.5"
+    "perfect-scrollbar": "1.5.5",
+    "sweetalert2": "^11.26.3"
   }
 }

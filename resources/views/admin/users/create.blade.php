@@ -6,6 +6,12 @@
 @extends('layouts/contentNavbarLayout')
 
 @section('title', 'Create User')
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@section('page-script')
+@include('admin.users.js')
+@endsection
 
 @section('content')
   <div class="{{ $container }}">
@@ -16,21 +22,21 @@
       </div>
 
       <div class="card-body">
-        <form method="POST" action="{{ route('users.store') }}">
+        <form id = "frmCreate">
           @csrf
           <div class="mb-3">
             <label class="form-label">Username</label>
-            <input type="text" name="username" class="form-control" required>
+            <input type="text" name="username" class="form-control">
           </div>
 
           <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" required>
+            <input type="email" name="email" class="form-control">
           </div>
 
           <div class="mb-3">
             <label class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" required>
+            <input type="password" name="password" class="form-control">
           </div>
 
           <div class="mb-3">
@@ -47,7 +53,7 @@
             </select>
           </div>
 
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" class="btn btn-primary" id = "btnCreate">Create</button>
         </form>
       </div>
     </div>

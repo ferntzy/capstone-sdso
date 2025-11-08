@@ -42,17 +42,31 @@
       </div>
     @endif
 
-    <form method="POST" action="{{ route('login.post') }}">
+    <form method="POST" action="{{ route('login.post') }}" autocomplete="on">
       @csrf
 
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="text" name="email" class="form-control" value="{{ old('email') }}" required autofocus>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          value="{{ old('email') }}"
+          required
+          autofocus
+          autocomplete="email">
       </div>
 
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" name="password" class="form-control" required>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form-control"
+          required
+          autocomplete="current-password">
       </div>
 
       <button type="submit" class="btn btn-primary w-100">Login</button>
@@ -84,3 +98,4 @@
 </body>
 
 </html>
+
