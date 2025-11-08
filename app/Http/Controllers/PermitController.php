@@ -160,7 +160,7 @@ class PermitController extends Controller
       $pdf->Write(0, $request->nature_other);
     }
 
-    // 🗓️ Dates & Times
+    //Dates & Times
     $startDate = strtotime($request->date_start);
     $endDate = $request->date_end ? strtotime($request->date_end) : null;
     if ($endDate && $endDate !== $startDate) {
