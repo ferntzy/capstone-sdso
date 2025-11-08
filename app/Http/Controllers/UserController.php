@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Exception;
 
 class UserController extends Controller
 {
@@ -22,28 +21,21 @@ class UserController extends Controller
 
   public function store(Request $request)
   {
-    try{
-        $validated = $request->validate([
-          'username' => 'required|unique:users,username',
-          'email' => 'required|email|unique:users,email',
-          'password' => 'required|min:6',
-          'account_role' => 'required',
-        ]);
+    $request->validate([
+      'username' => 'required|unique:users,username',
+      'email' => 'required|email|unique:users,email',
+      'password' => 'required|min:6',
+      'account_role' => 'required',
+    ]);
 
-        User::create([
-          'username' => $validated['username'],
-          'email' => $validated['email'],
-          'password' => Hash::make($validated['password']),
-          'account_role' => $validated['account_role'],
-        ]);
+    User::create([
+      'username' => $request->username,
+      'email' => $request->email,
+      'password' => Hash::make($request->password),
+      'account_role' => $request->account_role,
+    ]);
 
-      return response()->json(['success' => true, 'message' => 'User created successfully']);
-
-    }catch(Exception $e){
-      return response()->json(['error' => $e->getMessage()],400);
-    }
-
-    // return redirect()->route('users.index')->with('success', 'User created successfully!');
+    return redirect()->route('users.index')->with('success', 'User created successfully!');
   }
 
   public function edit(User $user)

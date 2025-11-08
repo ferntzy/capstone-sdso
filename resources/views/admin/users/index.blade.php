@@ -4,7 +4,6 @@
 @endphp
 
 @extends('layouts/contentNavbarLayout')
-
 @section('title', 'Users Management')
 
 @section('content')
@@ -187,14 +186,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('successModalLabel').textContent = 'Deleted';
                 document.querySelector('#successModal .modal-body').textContent = data.message;
                 const successModal = new bootstrap.Modal(successModalEl);
-                successModal.show();
+                // successModal.show();
             } else if (data.error) {
                 passwordError.textContent = data.error;
                 passwordError.classList.remove('d-none');
             }
         })
         .catch(err => {
-            console.error(err);
+            console.error(error);
         });
     });
 });
