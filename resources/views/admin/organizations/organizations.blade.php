@@ -1,45 +1,6 @@
 @php
   $container = 'container-xxl';
 
-  // Sample organization data (replace later with DB data)
-  $organizations = [
-    [
-      'id' => 1,
-      'name' => 'Supreme Student Council',
-      'type' => 'Government Organization',
-      'members' => 32,
-      'status' => 'Active',
-      'advisor' => 'Mr. John Dela Cruz',
-      'description' => 'The Supreme Student Council (SSC) represents the student body and promotes student welfare and engagement in university governance.'
-    ],
-    [
-      'id' => 2,
-      'name' => 'Junior Programmers Guild',
-      'type' => 'Academic Organization',
-      'members' => 45,
-      'status' => 'Active',
-      'advisor' => 'Engr. Sarah Lopez',
-      'description' => 'A community of aspiring programmers that conducts coding workshops, hackathons, and technical training for ICT students.'
-    ],
-    [
-      'id' => 3,
-      'name' => 'Environmental Awareness Club',
-      'type' => 'Civic Organization',
-      'members' => 21,
-      'status' => 'Inactive',
-      'advisor' => 'Dr. Maria Santos',
-      'description' => 'Focuses on environmental initiatives, sustainability projects, and community clean-up drives.'
-    ],
-    [
-      'id' => 4,
-      'name' => 'Cultural Dance Troupe',
-      'type' => 'Cultural Organization',
-      'members' => 28,
-      'status' => 'Active',
-      'advisor' => 'Prof. Anthony Reyes',
-      'description' => 'Promotes Filipino heritage and artistry through cultural dance performances and competitions.'
-    ],
-  ];
 @endphp
 
 @extends('layouts/contentNavbarLayout')

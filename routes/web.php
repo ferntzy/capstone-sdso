@@ -7,9 +7,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\PermitController;
 use App\Http\Controllers\StudentEventController;
+<<<<<<< HEAD
 use App\Http\Controllers\FacultyAdviserController;
 use App\Http\Controllers\StudentDashboardController;
 
+=======
+use App\Http\Controllers\OrganizationController;
+>>>>>>> da67bc9 (made modifications on organization.blade.php)
 // ============================
 // AUTH ROUTES
 // ============================
@@ -45,7 +49,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
   Route::view('/approvals/history', 'admin.approvals.history');
   Route::view('/esignatures/pending', 'admin.ESignature.pending');
   Route::view('/esignatures/completed', 'admin.ESignature.completed');
-  Route::view('/organizations', 'admin.organizations.organizations');
+  Route::get('/organizations', [OrganizationController::class, 'index'])->name('organizations.index');
+
+  // Route::view('/organizations', 'admin.organizations.organizations');
   Route::view('/reports/minutes', 'admin.reports.minutes');
   Route::view('/roles', 'admin.users.roles');
   Route::view('/account', 'admin.profile.account');
