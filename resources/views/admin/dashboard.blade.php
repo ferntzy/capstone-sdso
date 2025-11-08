@@ -114,13 +114,17 @@
             </div>
           </div>
 
-          <!-- Second Row -->
-          <div class="row g-4 mt-1">
-            <div class="col-md-4">
-              <div class="card border-0 shadow-sm h-100 hover-shadow">
-                {{-- Reserved for future stats --}}
+            <!-- Second Row -->
+            <div class="row g-4 mt-1">
+              <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 hover-shadow">
+                  {{-- <div class="card-body text-center">
+                    <i class="ti ti-users text-secondary mb-2" style="font-size:2.5rem;"></i>
+                    <h4 id="activeUsers" class="fw-bold mb-1">—</h4>
+                    <p class="text-muted mb-0">Active Users</p>
+                  </div> --}}
+                </div>
               </div>
-            </div>
 
             <div class="col-md-8">
               <div class="card border-0 shadow-sm h-100 hover-shadow">
@@ -173,22 +177,22 @@
     const eventList = document.getElementById('upcomingEventsList');
     eventList.innerHTML = '';
 
-    if (dashboardData.upcomingEvents.length > 0) {
-      dashboardData.upcomingEvents.forEach(event => {
-        const li = document.createElement('li');
-        li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-        li.innerHTML = `
-          <div>
-            <strong>${event.title}</strong><br>
-            <small class="text-muted">${event.date} • ${event.venue}</small>
-          </div>
-          <i class="ti ti-calendar text-primary"></i>
-        `;
-        eventList.appendChild(li);
+        if (dashboardData.upcomingEvents.length > 0) {
+          dashboardData.upcomingEvents.forEach(event => {
+            const li = document.createElement('li');
+            li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+            li.innerHTML = `
+                          <div>
+                            <strong>${event.title}</strong><br>
+                            <small class="text-muted">${event.date} • ${event.venue}</small>
+                          </div>
+                          <i class="ti ti-calendar text-primary"></i>
+                        `;
+            eventList.appendChild(li);
+          });
+        } else {
+          eventList.innerHTML = '<li class="list-group-item text-muted">No upcoming events available.</li>';
+        }
       });
-    } else {
-      eventList.innerHTML = '<li class="list-group-item text-muted">No upcoming events available.</li>';
-    }
-  });
-</script>
-@endsection
+    </script>
+  @endsection

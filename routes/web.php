@@ -7,6 +7,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\PermitController;
 use App\Http\Controllers\StudentEventController;
+use App\Http\Controllers\FacultyAdviserController;
+use App\Http\Controllers\StudentDashboardController;
+
 // ============================
 // AUTH ROUTES
 // ============================
@@ -53,19 +56,56 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 // STUDENT ORGANIZATION ROUTES
 // ============================
 Route::middleware(['auth', 'role:Student_Organization'])->prefix('student')->group(function () {
-  Route::get('/dashboard', [App\Http\Controllers\StudentDashboardController::class, 'index'])->name('student.dashboard');
-  Route::get('/events', [StudentEventController::class, 'index'])->name('student.event.index');
-  Route::view('/calendar', 'student.calendar')->name('student.calendar');
-  Route::view('/profile', 'student.profile')->name('student.profile');
-
-  // Permit routes
+  Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
   Route::get('/permit/form', [PermitController::class, 'showForm'])->name('permit.form');
   Route::post('/permit/generate', [PermitController::class, 'generate'])->name('permit.generate');
   Route::get('/permit/tracking', [PermitController::class, 'track'])->name('student.permit.tracking');
 
-  // ✅ Added route to view individual permit PDF
-  Route::get('/permit/view/{permit}', [PermitController::class, 'view'])->name('student.permit.view');
+  // hashed view route
+  Route::get('/permit/view/{hashed_id}', [PermitController::class, 'view'])->name('student.permit.view');
 });
+
+// Adviser routes (keep role middleware)
+Route::middleware(['auth', 'role:Faculty_Adviser'])->group(function () {
+  Route::get('/adviser/dashboard', [FacultyAdviserController::class, 'dashboard'])->name('adviser.dashboard');
+
+  // approve / reject actions
+  Route::post('/adviser/permit/{approval_id}/approve', [FacultyAdviserController::class, 'approve'])
+    ->name('faculty.approve');
+
+  Route::post('/adviser/permit/{approval_id}/reject', [FacultyAdviserController::class, 'reject'])
+    ->name('faculty.reject');
+});
+
+
+
+// ============================
+// FACULTY ADVISER ROUTES
+// ============================
+Route::middleware(['auth', 'role:Faculty_Adviser'])->prefix('adviser')->group(function () {
+
+  Route::get('/dashboard', [FacultyAdviserController::class, 'dashboard'])
+    ->name('adviser.dashboard');
+
+  Route::get('/approvals', [FacultyAdviserController::class, 'approvals'])
+    ->name('adviser.approvals');
+
+  // View PDF securely (ensure hashed_id works)
+  Route::get('/adviser/permit/view/{hashed_id}', [FacultyAdviserController::class, 'viewPermitPdf'])
+    ->name('faculty.permit.view');
+
+
+  // Approve & Reject
+  Route::post('/permit/{approval_id}/approve', [FacultyAdviserController::class, 'approve'])
+    ->name('faculty.approve');
+  Route::post('/permit/{approval_id}/reject', [FacultyAdviserController::class, 'reject'])
+    ->name('faculty.reject');
+});
+
+
+
+
+
 // ============================
 // OTHER ROLES
 // ============================
@@ -73,9 +113,7 @@ Route::middleware(['auth', 'role:SDSO_Head'])->group(function () {
   Route::view('/sdso/dashboard', 'sdso.dashboard')->name('sdso.dashboard');
 });
 
-Route::middleware(['auth', 'role:Faculty_Adviser'])->group(function () {
-  Route::view('/adviser/dashboard', 'adviser.dashboard')->name('adviser.dashboard');
-});
+
 
 Route::middleware(['auth', 'role:VP_SAS'])->group(function () {
   Route::view('/vpsas/dashboard', 'vpsas.dashboard')->name('vpsas.dashboard');

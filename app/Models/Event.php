@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-  use HasFactory;
-
+  protected $table = 'events'; // ✅ IMPORTANT — table name must match what exists
   protected $primaryKey = 'event_id';
+  public $timestamps = false;
 
   protected $fillable = [
     'organization_id',
@@ -18,13 +17,9 @@ class Event extends Model
     'proposal_status',
   ];
 
+  // ✅ Link to the approval flow
   public function approvals()
   {
-    return $this->hasMany(EventApproval::class, 'event_id', 'event_id');
-  }
-
-  public function organization()
-  {
-    return $this->belongsTo(Organization::class, 'organization_id', 'organization_id');
+    return $this->hasMany(EventApprovalFlow::class, 'permit_id', 'permit_id');
   }
 }

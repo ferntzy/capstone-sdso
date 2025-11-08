@@ -30,8 +30,8 @@ $(document).on("click", "#btnCreate", function(e){
         // ✅ Clear the form after success
         $("#frmCreate")[0].reset();
 
-        // Optional: focus back on username
         $("#frmCreate input[name='username']").focus();
+        window.location.href = "{{ route('users.index') }}";
       });
     },
 
