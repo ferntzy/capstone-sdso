@@ -6,12 +6,11 @@
 @extends('layouts/contentNavbarLayout')
 
 @section('title', 'Create User')
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-@section('page-script')
-@include('admin.users.js')
-@endsection
+@include("admin.users.js")
+<head>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
 
 @section('content')
   <div class="{{ $container }}">
@@ -22,21 +21,43 @@
       </div>
 
       <div class="card-body">
-        <form id = "frmCreate">
+        <form method="POST" action="{{ route('users.store') }}">
           @csrf
+
           <div class="mb-3">
             <label class="form-label">Username</label>
-            <input type="text" name="username" class="form-control">
+            <input type="text" name="username" class="form-control" required>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-control">
+            <input type="email" name="email" class="form-control" required>
           </div>
 
-          <div class="mb-3">
+          <!-- Password Field -->
+          <div class="mb-3 position-relative">
             <label class="form-label">Password</label>
-            <input type="password" name="password" class="form-control">
+            <div class="input-group">
+              <input type="password" name="password" class="form-control password-field" required>
+              <span class="input-group-text toggle-password" style="cursor:pointer;">
+                <i class="bi bi-eye-slash"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Re-type Password Field -->
+          <div class="mb-3 position-relative">
+            <label class="form-label">Re-type Password</label>
+            <div class="input-group">
+              <input type="password" name="password_confirmation" class="form-control password-field" required>
+              <span class="input-group-text toggle-password" style="cursor:pointer;">
+                <i class="bi bi-eye-slash"></i>
+              </span>
+            </div>
+            <!-- Inline error message -->
+            <div class="text-danger mt-1" id="password-match-error" style="display:none; font-size: 0.9rem;">
+              Passwords do not match
+            </div>
           </div>
 
           <div class="mb-3">
@@ -53,9 +74,12 @@
             </select>
           </div>
 
-          <button type="submit" class="btn btn-primary" id = "btnCreate">Create</button>
+          <button type="submit" class="btn btn-primary">Create</button>
         </form>
       </div>
     </div>
   </div>
+
+
+
 @endsection
