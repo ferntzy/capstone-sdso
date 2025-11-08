@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventApproval;
+use App\Models\EventApprovalFlow;
 use App\Models\Organization;
 use App\Models\Permit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
+use Vinkla\Hashids\Facades\Hashids;
+
 
 class PermitController extends Controller
 {
@@ -18,7 +21,6 @@ class PermitController extends Controller
     $organizations = Organization::where('user_id', $user->user_id)->get();
     return view('student.permit.form', compact('organizations'));
   }
-
   public function generate(Request $request)
   {
     $request->validate([
@@ -59,6 +61,21 @@ class PermitController extends Controller
       'signature_data' => $request->signature_data ?? null,
     ]);
 
+    $stages = [
+      'Faculty_Adviser',
+      'BARGO',
+      'SDSO_Head',
+      'SAS_Director',
+      'VP_SAS'
+    ];
+
+    foreach ($stages as $stage) {
+      EventApprovalFlow::create([
+        'permit_id' => $permit->permit_id,
+        'approver_role' => $stage,
+        'status' => 'pending',
+      ]);
+    }
     $event = Event::create([
       'organization_id' => $request->organization_id,
       'event_title' => $request->title_activity,
@@ -251,14 +268,16 @@ class PermitController extends Controller
       ->header('Content-Disposition', 'inline; filename="sdso_permit_filled.pdf"');
   }
 
-  public function view($id)
+  public function view($hashed_id)
   {
-    $permit = Permit::findOrFail($id);
-    if (!$permit->pdf_data) abort(404, 'No PDF found for this permit.');
+    $permit = Permit::where('hashed_id', $hashed_id)->firstOrFail();
 
-    return response($permit->pdf_data)
-      ->header('Content-Type', 'application/pdf')
-      ->header('Content-Disposition', 'inline; filename="sdso_permit_filled.pdf"');
+    if ($permit->pdf_data) {
+      return response($permit->pdf_data)
+        ->header('Content-Type', 'application/pdf');
+    }
+
+    abort(404, 'PDF not available.');
   }
 
   public function status($id)
@@ -267,12 +286,31 @@ class PermitController extends Controller
     $approvals = EventApproval::where('event_id', $permit->id)->orderBy('id')->get();
     return view('student.permit.status', compact('permit', 'approvals'));
   }
+  public function viewPdf($id)
+  {
+    $permit = Permit::findOrFail($id);
+
+    // Ensure the permit actually has PDF data
+    if (!$permit->pdf_data) {
+      abort(404, 'PDF not found.');
+    }
+
+    return response($permit->pdf_data)
+      ->header('Content-Type', 'application/pdf')
+      ->header('Content-Disposition', 'inline; filename="permit.pdf"');
+  }
 
   public function track()
   {
     $user = auth()->user();
-    $permits = Permit::with(['organization', 'event.approvals'])
-      ->whereHas('organization', fn($q) => $q->where('user_id', $user->user_id))
+
+    $permits = Permit::with([
+      'organization',
+      'approvals' // ✅ uses EventApprovalFlow model relation
+    ])
+      ->whereHas('organization', function ($q) use ($user) {
+        $q->where('user_id', $user->user_id);
+      })
       ->orderBy('created_at', 'desc')
       ->get();
 

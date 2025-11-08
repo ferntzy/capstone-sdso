@@ -20,12 +20,32 @@
           </div>
         @else
           @foreach ($permits as $permit)
-            <div class="card mb-4 border border-light shadow-sm">
+
+            @php
+              $encryptedId = $permit->hashed_id;
+              $stages = ['Faculty_Adviser', 'BARGO', 'SDSO_Head', 'SAS_Director', 'VP_SAS'];
+              $approvals = $permit->approvals ?? collect();
+
+              // Determine first stage not approved yet
+              $pendingIndex = null;
+              foreach ($stages as $index => $stage) {
+                $a = $approvals->firstWhere('approver_role', $stage);
+                if (!$a || $a->status !== 'approved') {
+                  $pendingIndex = $index;
+                  break;
+                }
+              }
+            @endphp
+
+            <div class="card mb-4 shadow-sm border border-light">
               <div class="card-body">
+
                 <h5 class="fw-bold text-primary mb-2">{{ $permit->title_activity }}</h5>
                 <p class="mb-2 text-muted">{{ $permit->organization->organization_name ?? 'Unknown Organization' }}</p>
-                <p class="mb-2"><strong>Purpose:</strong> {{ $permit->purpose ?? 'N/A' }}</p>
-                <p class="mb-2"><strong>Venue:</strong> {{ $permit->venue ?? 'N/A' }}</p>
+
+                <p class="mb-2"><strong>Purpose:</strong> {{ $permit->purpose }}</p>
+                <p class="mb-2"><strong>Venue:</strong> {{ $permit->venue }}</p>
+
                 <p class="mb-3">
                   <strong>Date:</strong>
                   {{ \Carbon\Carbon::parse($permit->date_start)->format('M d, Y') }}
@@ -34,67 +54,84 @@
                   @endif
                 </p>
 
-                {{-- ✅ Tracking Progress --}}
+                {{-- Progress Display --}}
                 <h6 class="fw-semibold text-dark mb-3">Approval Progress</h6>
 
-                @php
-                  $stages = ['Faculty_Adviser', 'BARGO', 'SDSO_Head', 'SAS_Director', 'VP_SAS'];
-                  $approvals = $permit->event->approvals ?? collect();
-                @endphp
-
                 <div class="d-flex justify-content-between flex-wrap" style="gap: 1rem;">
-                  @foreach ($stages as $stage)
+                  @foreach ($stages as $i => $stage)
                     @php
                       $approval = $approvals->firstWhere('approver_role', $stage);
                       $status = $approval->status ?? 'pending';
-                      $statusColor = match ($status) {
-                        'approved' => 'bg-success',
-                        'rejected' => 'bg-danger',
-                        default => 'bg-secondary'
-                      };
+
+                      if ($status === 'rejected') {
+                        $color = 'bg-danger';
+                        $icon = 'mdi-close';
+                      } elseif ($status === 'approved') {
+                        $color = 'bg-success';
+                        $icon = 'mdi-check-bold';
+                      } elseif ($pendingIndex === $i) {
+                        $color = 'bg-warning text-dark';
+                        $icon = 'mdi-clock-outline';
+                      } else {
+                        $color = 'bg-secondary';
+                        $icon = 'mdi-clock-outline';
+                      }
                     @endphp
 
                     <div class="text-center flex-fill" style="min-width: 120px;">
-                      <div class="position-relative d-inline-block mb-2">
-                        <div class="rounded-circle {{ $statusColor }}"
-                          style="width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; color: white;">
-                          @if ($status === 'approved')
-                            <i class="mdi mdi-check-bold fs-5"></i>
-                          @elseif ($status === 'rejected')
-                            <i class="mdi mdi-close fs-5"></i>
-                          @else
-                            <i class="mdi mdi-clock-outline fs-5"></i>
-                          @endif
-                        </div>
+                      <div class="rounded-circle {{ $color }} d-flex align-items-center justify-content-center"
+                        style="width: 42px; height: 42px;">
+                        <i class="mdi {{ $icon }} fs-5"></i>
                       </div>
-                      <div class="small fw-semibold">{{ str_replace('_', ' ', $stage) }}</div>
+                      <div class="small fw-semibold mt-1">{{ str_replace('_', ' ', $stage) }}</div>
                       <div class="text-muted small text-capitalize">{{ $status }}</div>
                     </div>
                   @endforeach
                 </div>
 
+                {{-- Status Notice --}}
                 @if ($approvals->where('status', 'rejected')->isNotEmpty())
-                  <div class="alert alert-danger mt-3 mb-0">
-                    <strong>Rejected:</strong> One or more offices have rejected this request.
-                  </div>
+                  <div class="alert alert-danger mt-3 mb-0">❌ One or more offices have rejected this request.</div>
                 @elseif ($approvals->where('status', 'approved')->count() === count($stages))
-                  <div class="alert alert-success mt-3 mb-0">
-                    ✅ This activity has been fully approved and recorded in the system.
-                  </div>
+                  <div class="alert alert-success mt-3 mb-0">✅ Fully Approved.</div>
                 @else
-                  <div class="alert alert-warning mt-3 mb-0">
-                    ⏳ This permit is still under review. Please wait for further updates.
-                  </div>
+                  <div class="alert alert-warning mt-3 mb-0">⏳ Under Review.</div>
                 @endif
 
                 <div class="text-end mt-3">
-                  <a href="{{ route('student.permit.view', $permit->permit_id) }}" target="_blank"
-                    class="btn btn-outline-primary btn-sm">
-                    <i class="mdi mdi-file-pdf-box"></i> View Permit PDF
-                  </a>
+                  <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#pdfModal_{{ $permit->hashed_id }}">
+                    <i class="mdi mdi-file-pdf-box"></i> View Permit
+                  </button>
                 </div>
               </div>
             </div>
+
+            {{-- PDF Viewer Modal --}}
+            <div class="modal fade" id="pdfModal_{{ $permit->hashed_id }}" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Permit: {{ $permit->title_activity }}</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                  </div>
+
+                  <div class="modal-body p-0" style="height: 80vh;">
+                    <iframe src="{{ route('student.permit.view', $permit->hashed_id) }}"
+                      style="width:100%; height:100%; border:none;"></iframe>
+                  </div>
+
+                  <div class="modal-footer">
+                    <a href="{{ route('student.permit.view', $permit->hashed_id) }}" target="_blank" class="btn btn-success">
+                      Open in New Tab
+                    </a>
+                    <button class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
           @endforeach
         @endif
       </div>
