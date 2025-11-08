@@ -63,3 +63,50 @@ $(document).on("click", "#btnCreate", function(e){
 
 
 </script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Toggle password visibility
+      document.querySelectorAll('.toggle-password').forEach(icon => {
+        icon.addEventListener('click', function () {
+          const input = this.parentElement.querySelector('.password-field');
+          const eyeIcon = this.querySelector('i');
+          if (input.type === 'password') {
+            input.type = 'text';
+            eyeIcon.classList.replace('bi-eye-slash', 'bi-eye');
+          } else {
+            input.type = 'password';
+            eyeIcon.classList.replace('bi-eye', 'bi-eye-slash');
+          }
+        });
+      });
+
+      // Live password match check
+      const passwordInput = document.querySelector('input[name="password"]');
+      const confirmInput = document.querySelector('input[name="password_confirmation"]');
+      const errorDiv = document.getElementById('password-match-error');
+      const form = document.querySelector('form');
+
+      confirmInput.addEventListener('input', function() {
+        if (confirmInput.value === '') {
+          errorDiv.style.display = 'none';
+          return;
+        }
+        if (confirmInput.value !== passwordInput.value) {
+          errorDiv.style.display = 'block';
+        } else {
+          errorDiv.style.display = 'none';
+        }
+      });
+
+      // Prevent form submission if passwords do not match
+      form.addEventListener('submit', function(e) {
+        if (confirmInput.value !== passwordInput.value) {
+          e.preventDefault();
+          confirmInput.focus();
+        }
+      });
+    });
+  </script>
